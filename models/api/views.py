@@ -24,7 +24,7 @@ def _is_hex(str):
 
 
 def _valid_content(str):
-    return True
+    return len(str) <= 140
 
 
 # get un-retrieved bullets
@@ -110,9 +110,11 @@ def create_bullet(request):
     if 'info' in post_dict:
         bul.info = Info.objects.create(content=post_dict['info'])
 
+    bul.save()
+    """
     try:
         bul.save()
     except:
         return HttpResponseBadRequest('cannot save the bullet')
-
+    """
     return JsonResponse({ 'ok': True })
