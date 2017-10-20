@@ -29,9 +29,9 @@ def index_page(request):
     if request.method == 'POST':
         tree = etree.fromstring(request.body.decode('utf-8'))
         ret_tree = etree.Element('xml')
-        etree.SubElement(ret_tree, 'ToUserName').text = tree.xpath('/xml/FromUserName').text
-        etree.SubElement(ret_tree, 'FromUserName').text = tree.xpath('/xml/ToUserName').text
-        etree.SubElement(ret_tree, 'CreateTime').text = tree.xpath('/xml/CreateTime').text
-        etree.SubElement(ret_tree, 'MsgType').text = tree.xpath('/xml/MsgType').text
+        etree.SubElement(ret_tree, 'ToUserName').text = tree.xpath('/xml/FromUserName')[0].text
+        etree.SubElement(ret_tree, 'FromUserName').text = tree.xpath('/xml/ToUserName')[0].text
+        etree.SubElement(ret_tree, 'CreateTime').text = tree.xpath('/xml/CreateTime')[0].text
+        etree.SubElement(ret_tree, 'MsgType').text = tree.xpath('/xml/MsgType')[0].text
         etree.SubElement(ret_tree, 'Content').text = '你好'
         return HttpResponse(ret_tree.tostring(), content_type='application/xml')
