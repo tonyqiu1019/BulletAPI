@@ -1,7 +1,6 @@
 from django.http import HttpResponse, HttpResponseBadRequest
 
 from hashlib import sha1
-import os
 
 def index_page(request):
     get_dict = request.GET.dict()
