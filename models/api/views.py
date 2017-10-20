@@ -95,6 +95,7 @@ def create_bullet(request):
         return HttpResponseBadRequest('content cannot pass filter')
 
     bul = Bullet(content=post_dict['content'])
+    resp = { 'ok': True, 'first_visit': False }
 
     if 'color' in post_dict:
         if _is_hex(post_dict['color']):
@@ -111,14 +112,28 @@ def create_bullet(request):
             bul.font_size = post_dict['font_size']
         else:
             return HttpResponseBadRequest('bad key \'font_size\'')
-    if 'info' in post_dict:
-        bul.info = Info.objects.create(content=post_dict['info'])
+
+    if 'fingerprint' not in post_dict:
+        return HttpResponseBadRequest('please specify fingerprint')
+    fp = post_dict['fingerprint']
+    if not isinstance(fp, int):
+        return HttpResponseBadRequest('bad key \'fingerprint\'')
+
+    try:
+        this_info = Info.objects.get(fingerprint=fp)
+        bul.info = this_info
+    except:
+        bul.info = Info.objects.create(fingerprint=fp)
+        resp['first_visit'] = True
+
+    if 'user_agent' in post_dict and resp['first_visit']:
+        bul.info.user_agent = post_dict['user_agent']
 
     try:
         bul.save()
     except:
         return HttpResponseBadRequest('cannot save the bullet')
-    
-    ret = JsonResponse({ 'ok': True })
+
+    ret = JsonResponse(resp)
     ret['Access-Control-Allow-Origin'] = '*'
     return ret
