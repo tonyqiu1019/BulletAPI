@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseBadRequest
 
 from hashlib import sha1
+import os
 
 def index_page(request):
     get_dict = request.GET.dict()
@@ -10,7 +11,8 @@ def index_page(request):
             return HttpResponseBadRequest('invalid tokens')
 
     my_token = 'uvacsssvoice'
-    arr = [my_token, get_dict['timestamp'], get_dict['nonce']].sort()
+    arr = [my_token, get_dict['timestamp'], get_dict['nonce']]
+    arr.sort()
     before_hash = arr[0] + arr[1] + arr[2]
     after_hash = sha1(before_hash.encode('utf-8')).hexdigest()
 

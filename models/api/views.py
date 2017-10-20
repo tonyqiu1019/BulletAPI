@@ -118,8 +118,7 @@ def create_bullet(request):
     fp = post_dict['fingerprint']
 
     try:
-        this_info = Info.objects.get(fingerprint=fp)
-        bul.info = this_info
+        bul.info = Info.objects.get(fingerprint=fp)
     except:
         bul.info = Info.objects.create(fingerprint=fp)
         resp['first_visit'] = True
