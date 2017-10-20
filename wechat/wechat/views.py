@@ -1,8 +1,9 @@
 from django.http import HttpResponse, HttpResponseBadRequest
 
 from hashlib import sha1
+from lxml import etree
 
-def index_page(request):
+def _check_token(request):
     get_dict = request.GET.dict()
     needed_token = ['signature', 'timestamp', 'nonce', 'echostr']
     for token in needed_token:
@@ -19,3 +20,18 @@ def index_page(request):
         return HttpResponse(get_dict['echostr'])
     else:
         return HttpResponseBadRequest('something went wrong')
+
+
+def index_page(request):
+    if request.method == 'GET':
+        return _check_token(request)
+
+    if request.method == 'POST':
+        tree = etree.fromstring(request.body.decode('utf-8'))
+        ret_tree = etree.Element('xml')
+        etree.SubElement(ret_tree, 'ToUserName').text = tree.xpath('/xml/FromUserName').text
+        etree.SubElement(ret_tree, 'FromUserName').text = tree.xpath('/xml/ToUserName').text
+        etree.SubElement(ret_tree, 'CreateTime').text = tree.xpath('/xml/CreateTime').text
+        etree.SubElement(ret_tree, 'MsgType').text = tree.xpath('/xml/MsgType').text
+        etree.SubElement(ret_tree, 'Content').text = '你好'
+        return HttpResponse(ret_tree.tostring(), content_type='application/xml')
