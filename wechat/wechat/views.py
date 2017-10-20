@@ -59,6 +59,7 @@ def _handle_reply(request):
         to_name = tree.xpath('/xml/ToUserName')[0].text
         create_time = tree.xpath('/xml/CreateTime')[0].text
         msg_type = tree.xpath('/xml/MsgType')[0].text
+        content = tree.xpath('/xml/Content')[0].text
     except:
         return HttpResponseBadRequest('cannot parse correct xml')
 
