@@ -26,5 +26,5 @@ class Bullet(models.Model):
 
 # the user info about a bullet
 class Info(models.Model):
-    fingerprint = models.BigIntegerField(unique=True)
+    fingerprint = models.CharField(max_length=64, unique=True)
     user_agent = models.CharField(max_length=1024, blank=True)

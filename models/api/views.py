@@ -116,8 +116,6 @@ def create_bullet(request):
     if 'fingerprint' not in post_dict:
         return HttpResponseBadRequest('please specify fingerprint')
     fp = post_dict['fingerprint']
-    if not isinstance(fp, int):
-        return HttpResponseBadRequest('bad key \'fingerprint\'')
 
     try:
         this_info = Info.objects.get(fingerprint=fp)
