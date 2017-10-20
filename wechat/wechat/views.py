@@ -54,18 +54,22 @@ def _reply(from_name, to_name, create_time, msg_type, content):
 
 def _handle_reply(request):
     tree = etree.fromstring(request.body.decode('utf-8'))
+
+    try:
+        msg_type = tree.xpath('/xml/MsgType')[0].text
+    except:
+        return HttpResponseBadRequest('cannot parse correct xml')
+    if msg_type != 'text':
+        txt = '弹幕仅支持文本信息，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
+        return _reply(to_name, from_name, create_time, msg_type, txt)
+
     try:
         from_name = tree.xpath('/xml/FromUserName')[0].text
         to_name = tree.xpath('/xml/ToUserName')[0].text
         create_time = tree.xpath('/xml/CreateTime')[0].text
-        msg_type = tree.xpath('/xml/MsgType')[0].text
         content = tree.xpath('/xml/Content')[0].text
     except:
         return HttpResponseBadRequest('cannot parse correct xml')
-
-    if msg_type != 'text':
-        txt = '弹幕仅支持文本信息，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
-        return _reply(to_name, from_name, create_time, msg_type, txt)
 
     if len(content) <= 2 or content[:2] != '弹幕':
         txt = '你的弹幕格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
