@@ -76,12 +76,21 @@ def _handle_reply(request):
         txt = '你的弹幕格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
         return _reply(to_name, from_name, create_time, txt)
 
-    bullet_txt = content[2:].strip()
-    if len(bullet_txt) == 0:
+    bul = content[2:].strip()
+    if len(bul) == 0:
         txt = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
         return _reply(to_name, from_name, create_time, txt)
-    else:
-        txt = '你发送的弹幕信息是：' + bullet_txt
+
+    post_url = 'http://162.243.117.39:8000/api/create/'
+    post_data = { 'content': bul, 'fingerprint': '#'+from_name }
+
+    try:
+        resp = _make_post_request(post_url, post_data)
+        if resp['ok']:
+            txt = '弹幕发送成功！'
+            return _reply(to_name, from_name, create_time, txt)
+    except:
+        txt = 'oops，你的弹幕发送失败了...请再给我们一个机会，稍等片刻再试哦'
         return _reply(to_name, from_name, create_time, txt)
 
 
