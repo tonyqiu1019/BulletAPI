@@ -6,16 +6,10 @@ from lxml import etree
 import urllib.request
 import json
 
-def _make_get_request(url):
-    req = urllib.request.Request(url)
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    resp = json.loads(resp_json)
-    return resp
-
-
 def _make_post_request(url, post_data):
-    post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+    post_encoded = json.dumps(post_data).encode('utf-8')
     req = urllib.request.Request(url, data=post_encoded, method='POST')
+    req.add_header('Content-Type', 'application/json')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     resp = json.loads(resp_json)
     return resp
@@ -84,12 +78,12 @@ def _handle_reply(request):
     post_url = 'http://162.243.117.39:8000/api/create/'
     post_data = { 'content': bul, 'fingerprint': '#'+from_name }
 
-    try:
-        resp = _make_post_request(post_url, post_data)
-        if resp['ok']:
-            txt = '弹幕发送成功！'
-            return _reply(to_name, from_name, create_time, txt)
-    except:
+    # try:
+    resp = _make_post_request(post_url, post_data)
+    if resp['ok']:
+        txt = '弹幕发送成功！'
+        return _reply(to_name, from_name, create_time, txt)
+    else:
         txt = 'oops，你的弹幕发送失败了...请再给我们一个机会，稍等片刻再试哦'
         return _reply(to_name, from_name, create_time, txt)
 
