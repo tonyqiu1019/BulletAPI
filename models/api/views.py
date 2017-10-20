@@ -47,7 +47,9 @@ def new_bullets(request):
         resp['bullets'].append(cur)
         if len(resp['bullets']) >= 30: break
 
-    return JsonResponse(resp)
+    ret = JsonResponse(resp)
+    ret['Access-Control-Allow-Origin'] = '*'
+    return ret
 
 
 # update posted bullets
@@ -73,7 +75,9 @@ def success_last_retrieve(request):
         if (not obj.ret_time is None) and (obj.post_time is None):
             obj.post_time = time_now; obj.save()
 
-    return JsonResponse({ 'ok': True })
+    ret = JsonResponse({ 'ok': True })
+    ret['Access-Control-Allow-Origin'] = '*'
+    return ret
 
 
 # create a new bullet
@@ -110,11 +114,11 @@ def create_bullet(request):
     if 'info' in post_dict:
         bul.info = Info.objects.create(content=post_dict['info'])
 
-    bul.save()
-    """
     try:
         bul.save()
     except:
         return HttpResponseBadRequest('cannot save the bullet')
-    """
-    return JsonResponse({ 'ok': True })
+    
+    ret = JsonResponse({ 'ok': True })
+    ret['Access-Control-Allow-Origin'] = '*'
+    return ret
