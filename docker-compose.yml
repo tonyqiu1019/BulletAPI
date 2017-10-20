@@ -6,14 +6,3 @@ models:
     ports:
         - "8000:8000"
     command: bash -c "python manage.py makemigrations api; python /app/manage.py migrate; mod_wsgi-express start-server --reload-on-change --working-directory /app /app/models/wsgi.py"
-
-wechat:
-    container_name: wechat
-    image: tp33/django
-    volumes:
-        - ./wechat/:/app
-    ports:
-        - "80:8000"
-    links:
-        - models:models-api
-    command: bash -c "mod_wsgi-express start-server --reload-on-change --working-directory /app /app/wechat/wsgi.py"
