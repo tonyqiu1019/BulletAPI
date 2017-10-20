@@ -63,10 +63,10 @@ def _handle_reply(request):
         return HttpResponseBadRequest('cannot parse correct xml')
 
     if msg_type != 'text':
-        txt = '弹幕仅支持文本信息，请按\"弹幕 <想发送的内容>\"格式发弹幕'
+        txt = '弹幕仅支持文本信息，请按\n\"弹幕 <想发送的内容>\"\n格式发弹幕'
         return _reply(to_name, from_name, create_time, msg_type, txt)
     else:
-        txt = '弹幕仅支持文本信息，请按\"弹幕 <想发送的内容>\"格式发弹幕'
+        txt = '弹幕仅支持文本信息，请按\n\"弹幕 <想发送的内容>\"\n格式发弹幕'
         return _reply(to_name, from_name, create_time, msg_type, txt)
 
 
