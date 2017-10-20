@@ -34,4 +34,5 @@ def index_page(request):
         etree.SubElement(ret_tree, 'CreateTime').text = tree.xpath('/xml/CreateTime')[0].text
         etree.SubElement(ret_tree, 'MsgType').text = tree.xpath('/xml/MsgType')[0].text
         etree.SubElement(ret_tree, 'Content').text = '你好'
-        return HttpResponse(etree.tostring(ret_tree, pretty_print=True), content_type='application/xml')
+        ret = etree.tostring(ret_tree, pretty_print=True, encoding='unicode')
+        return HttpResponse(ret, content_type='application/xml')
