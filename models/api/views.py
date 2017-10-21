@@ -29,6 +29,13 @@ def _valid_content(str):
 
 # get un-retrieved bullets
 def new_bullets(request):
+    if request.method == 'OPTION':
+        ret = JsonResponse({ 'ok': True })
+        ret['Access-Control-Allow-Origin'] = '*'
+        ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
+        ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
+        ret['Access-Control-Max-Age'] = '86400'
+        return ret
     if request.method != 'GET':
         return HttpResponseBadRequest('bad request type')
 
@@ -49,11 +56,21 @@ def new_bullets(request):
 
     ret = JsonResponse(resp)
     ret['Access-Control-Allow-Origin'] = '*'
+    ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
+    ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
+    ret['Access-Control-Max-Age'] = '86400'
     return ret
 
 
 # update posted bullets
 def success_last_retrieve(request):
+    if request.method == 'OPTION':
+        ret = JsonResponse({ 'ok': True })
+        ret['Access-Control-Allow-Origin'] = '*'
+        ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
+        ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
+        ret['Access-Control-Max-Age'] = '86400'
+        return ret
     if request.method != 'POST':
         return HttpResponseBadRequest('bad request type')
     try:
@@ -77,11 +94,21 @@ def success_last_retrieve(request):
 
     ret = JsonResponse({ 'ok': True })
     ret['Access-Control-Allow-Origin'] = '*'
+    ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
+    ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
+    ret['Access-Control-Max-Age'] = '86400'
     return ret
 
 
 # create a new bullet
 def create_bullet(request):
+    if request.method == 'OPTION':
+        ret = JsonResponse({ 'ok': True })
+        ret['Access-Control-Allow-Origin'] = '*'
+        ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
+        ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
+        ret['Access-Control-Max-Age'] = '86400'
+        return ret
     if request.method != 'POST':
         return HttpResponseBadRequest('bad request type')
     try:
@@ -133,4 +160,7 @@ def create_bullet(request):
 
     ret = JsonResponse(resp)
     ret['Access-Control-Allow-Origin'] = '*'
+    ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
+    ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
+    ret['Access-Control-Max-Age'] = '86400'
     return ret
