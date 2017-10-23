@@ -70,11 +70,15 @@ def _handle_reply(request):
         txt = '你的弹幕格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
         return _reply(to_name, from_name, create_time, txt)
 
-    bul = content[2:].strip()
+    bul = content[2:]
     if len(bul) == 0:
         txt = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
         return _reply(to_name, from_name, create_time, txt)
+    if bul[0] != ' ':
+        txt = '你的弹幕格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
+        return _reply(to_name, from_name, create_time, txt)
 
+    bul = bul.strip()
     post_url = 'http://162.243.117.39:8000/api/create/'
     post_data = { 'content': bul, 'fingerprint': '#'+from_name }
 
