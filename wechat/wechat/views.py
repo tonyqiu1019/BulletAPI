@@ -79,6 +79,10 @@ def _handle_reply(request):
         return _reply(to_name, from_name, create_time, txt)
 
     bul = bul.strip()
+    if len(bul) == 0:
+        txt = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
+        return _reply(to_name, from_name, create_time, txt)
+    
     post_url = 'http://162.243.117.39:8000/api/create/'
     post_data = { 'content': bul, 'fingerprint': '#'+from_name }
 
