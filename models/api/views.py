@@ -39,17 +39,8 @@ def _valid_content(str):
 # get un-retrieved bullets
 def new_bullets(request):
     if request.method == 'OPTION':
-<<<<<<< HEAD
-        ret = JsonResponse({ 'ok': True })
-        ret['Access-Control-Allow-Origin'] = '*'
-        ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
-        ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
-        ret['Access-Control-Max-Age'] = '86400'
-        return ret
-=======
         return _response_with_header({ 'ok': True })
 
->>>>>>> 979784072629da960b8056038ce217c32d311fd7
     if request.method != 'GET':
         return HttpResponseBadRequest('bad request type')
 
@@ -68,32 +59,14 @@ def new_bullets(request):
         resp['bullets'].append(cur)
         if len(resp['bullets']) >= 30: break
 
-<<<<<<< HEAD
-    ret = JsonResponse(resp)
-    ret['Access-Control-Allow-Origin'] = '*'
-    ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
-    ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
-    ret['Access-Control-Max-Age'] = '86400'
-    return ret
-=======
     return _response_with_header(resp)
->>>>>>> 979784072629da960b8056038ce217c32d311fd7
 
 
 # update posted bullets
 def success_last_retrieve(request):
     if request.method == 'OPTION':
-<<<<<<< HEAD
-        ret = JsonResponse({ 'ok': True })
-        ret['Access-Control-Allow-Origin'] = '*'
-        ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
-        ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
-        ret['Access-Control-Max-Age'] = '86400'
-        return ret
-=======
         return _response_with_header({ 'ok': True })
 
->>>>>>> 979784072629da960b8056038ce217c32d311fd7
     if request.method != 'POST':
         return HttpResponseBadRequest('bad request type')
     try:
@@ -115,32 +88,13 @@ def success_last_retrieve(request):
         if (not obj.ret_time is None) and (obj.post_time is None):
             obj.post_time = time_now; obj.save()
 
-<<<<<<< HEAD
-    ret = JsonResponse({ 'ok': True })
-    ret['Access-Control-Allow-Origin'] = '*'
-    ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
-    ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
-    ret['Access-Control-Max-Age'] = '86400'
-    return ret
-=======
     return _response_with_header({ 'ok': True })
->>>>>>> 979784072629da960b8056038ce217c32d311fd7
-
 
 # create a new bullet
 def create_bullet(request):
     if request.method == 'OPTION':
-<<<<<<< HEAD
-        ret = JsonResponse({ 'ok': True })
-        ret['Access-Control-Allow-Origin'] = '*'
-        ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
-        ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
-        ret['Access-Control-Max-Age'] = '86400'
-        return ret
-=======
         return _response_with_header({ 'ok': True })
 
->>>>>>> 979784072629da960b8056038ce217c32d311fd7
     if request.method != 'POST':
         return HttpResponseBadRequest('bad request type')
     try:
@@ -190,13 +144,4 @@ def create_bullet(request):
     except:
         return HttpResponseBadRequest('cannot save the bullet')
 
-<<<<<<< HEAD
-    ret = JsonResponse(resp)
-    ret['Access-Control-Allow-Origin'] = '*'
-    ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
-    ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
-    ret['Access-Control-Max-Age'] = '86400'
-    return ret
-=======
     return _response_with_header(resp)
->>>>>>> 979784072629da960b8056038ce217c32d311fd7

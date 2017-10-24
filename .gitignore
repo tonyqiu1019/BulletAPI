@@ -9,3 +9,7 @@ __pycache__/
 db.sqlite3
 migrations/
 
+# lib
+models/lib/**
+models/env/**
+
