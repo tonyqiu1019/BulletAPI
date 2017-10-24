@@ -1,2 +1,4 @@
+
 MySQL-python==1.2.5
 Django==1.11.5
+django-cors-headers==2.1.0
