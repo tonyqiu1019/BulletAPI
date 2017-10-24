@@ -90,7 +90,6 @@ def success_last_retrieve(request):
 
     return _response_with_header({ 'ok': True })
 
-
 # create a new bullet
 def create_bullet(request):
     if request.method == 'OPTION':

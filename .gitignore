@@ -3,7 +3,13 @@
 
 # python cache
 __pycache__/
+**.pyc
 
 # database related
 db.sqlite3
 migrations/
+
+# lib
+models/lib/**
+models/env/**
+
