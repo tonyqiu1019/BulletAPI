@@ -17,9 +17,9 @@ class Bullet(models.Model):
         ('s', 'scroll'),
     ), default='s')
 
-    def __str__(self):
-        if len(self.content) >= 13: return self.content[:10] + '...'
-        else: return self.content
+    def __unicode__(self):
+        ret = self.content[:10]+'...' if len(self.content) > 13 else self.content 
+        return u'%s' % (ret,)
 
     class Meta:
         ordering = ['ret_time', 'post_time']
@@ -29,3 +29,6 @@ class Info(models.Model):
     fingerprint = models.CharField(max_length=64, unique=True)
     user_agent = models.CharField(max_length=1024, blank=True)
     is_banned = models.BooleanField(blank=True, default=False)
+
+    def __unicode__(self):
+        return u'%s' % (self.fingerprint,)
