@@ -57,8 +57,18 @@ def _handle_reply(request):
     except:
         return HttpResponseBadRequest('cannot parse correct xml')
 
-    if msg_type != 'text':
-        txt = '弹幕仅支持文本信息，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
+    if msg_type == 'event':
+        try:
+            event = tree.xpath('/xml/Event')[0].text
+            if event == 'subscribe':
+                txt = '欢迎关注UVA CSSS微信公众号！\n今晚的好声音活动中，我们将使用此公众号为观众提供弹幕互动和投票功能，请按照\n\"弹幕 想发送的内容\"\n格式发弹幕，或回复\"投票\"为喜欢的歌手投票！\n感谢你的参与！'
+                return _reply(to_name, from_name, create_time, txt)
+            else:
+                return HttpResponse('')
+        except:
+            return HttpResponse('')
+    elif msg_type != 'text':
+        txt = '目前仅支持文本信息，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，或回复\"投票\"为喜欢的歌手投票'
         return _reply(to_name, from_name, create_time, txt)
 
     try:
@@ -66,8 +76,12 @@ def _handle_reply(request):
     except:
         return HttpResponseBadRequest('cannot parse correct xml')
 
+    if content == '投票':
+        txt = '投票链接暂未开放，请等待比赛结束后统一为自己喜欢的选手投票哦！'
+        return _reply(to_name, from_name, create_time, txt)
+
     if len(content) <= 2 or content[:2] != '弹幕':
-        txt = '你的弹幕格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
+        txt = '你的消息格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，或回复\"投票\"为喜欢的歌手投票'
         return _reply(to_name, from_name, create_time, txt)
 
     bul = content[2:]
@@ -75,15 +89,15 @@ def _handle_reply(request):
         txt = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
         return _reply(to_name, from_name, create_time, txt)
     if bul[0] != ' ':
-        txt = '你的弹幕格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
+        txt = '你的消息格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，或回复\"投票\"为喜欢的歌手投票'
         return _reply(to_name, from_name, create_time, txt)
 
     bul = bul.strip()
     if len(bul) == 0:
         txt = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
         return _reply(to_name, from_name, create_time, txt)
-    
-    post_url = 'http://162.243.117.39:8000/api/create/'
+
+    post_url = 'https://danmu-183606.appspot.com/api/create/'
     post_data = { 'content': bul, 'fingerprint': '#'+from_name }
 
     try:
@@ -91,8 +105,11 @@ def _handle_reply(request):
         if resp['ok']:
             txt = '弹幕发送成功！'
             return _reply(to_name, from_name, create_time, txt)
+        else:
+            txt = '你已被禁言，请联系管理员，询问情况后再试'
+            return _reply(to_name, from_name, create_time, txt)
     except:
-        txt = 'oops，你的弹幕发送失败了...请再给我们一个机会，稍等片刻再试哦'
+        txt = 'oops，你的弹幕发送失败了...请稍等片刻再试哦'
         return _reply(to_name, from_name, create_time, txt)
 
 
