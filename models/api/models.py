@@ -28,3 +28,4 @@ class Bullet(models.Model):
 class Info(models.Model):
     fingerprint = models.CharField(max_length=64, unique=True)
     user_agent = models.CharField(max_length=1024, blank=True)
+    is_banned = models.BooleanField(blank=True, default=False)

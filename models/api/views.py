@@ -57,7 +57,7 @@ def new_bullets(request):
         cur = { 'content': obj.content, 'color': obj.color, 'id': obj.id,
             'display_mode': obj.display_mode,'font_size': obj.font_size }
         resp['bullets'].append(cur)
-        if len(resp['bullets']) >= 30: break
+        if len(resp['bullets']) >= 20: break
 
     return _response_with_header(resp)
 
@@ -89,6 +89,7 @@ def success_last_retrieve(request):
             obj.post_time = time_now; obj.save()
 
     return _response_with_header({ 'ok': True })
+
 
 # create a new bullet
 def create_bullet(request):
@@ -138,6 +139,9 @@ def create_bullet(request):
 
     if 'user_agent' in post_dict and resp['first_visit']:
         bul.info.user_agent = post_dict['user_agent']
+    if bul.info.is_banned:
+        resp['ok'] = False
+        return _response_with_header(resp)
 
     try:
         bul.save()
