@@ -61,7 +61,7 @@ def _handle_reply(request):
         try:
             event = tree.xpath('/xml/Event')[0].text
             if event == 'subscribe':
-                txt = '欢迎关注UVA CSSS微信公众号！\n今晚的好声音活动中，我们将使用此公众号为观众提供弹幕互动和投票功能，请按照\n\"弹幕 想发送的内容\"\n格式发弹幕，或回复\"投票\"为喜欢的歌手投票！\n感谢你的参与！'
+                txt = '欢迎关注UVA CSSS微信公众号！\n今晚的好声音活动中，我们将使用此公众号为观众提供弹幕互动和投票功能，请按照\n\"弹幕 想发送的内容\"\n格式发弹幕，或回复\"投票\"为喜欢的歌手投票！感谢你的参与！'
                 return _reply(to_name, from_name, create_time, txt)
             else:
                 return HttpResponse('')
@@ -76,12 +76,15 @@ def _handle_reply(request):
     except:
         return HttpResponseBadRequest('cannot parse correct xml')
 
+    if content == '教程':
+        txt = '发送弹幕请参考：http://mp.weixin.qq.com/s/pPOxYWzgmnXjWN6Dienf6Q'
+        return _reply(to_name, from_name, create_time, txt)
     if content == '投票':
-        txt = '投票链接暂未开放，请等待比赛结束后统一为自己喜欢的选手投票哦！'
+        txt = '请点击以下链接：http://mp.weixin.qq.com/s/vaq3mBpZXWwqAxenun5Y9g 参与投票！'
         return _reply(to_name, from_name, create_time, txt)
 
     if len(content) <= 2 or content[:2] != '弹幕':
-        txt = '你的消息格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，或回复\"投票\"为喜欢的歌手投票'
+        txt = '你的消息格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，回复\"教程\"获取发弹幕教程，或回复\"投票\"为喜欢的歌手投票'
         return _reply(to_name, from_name, create_time, txt)
 
     bul = content[2:]
@@ -89,7 +92,7 @@ def _handle_reply(request):
         txt = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格式发弹幕'
         return _reply(to_name, from_name, create_time, txt)
     if bul[0] != ' ':
-        txt = '你的消息格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，或回复\"投票\"为喜欢的歌手投票'
+        txt = '你的消息格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，回复\"教程\"获取发弹幕教程，或回复\"投票\"为喜欢的歌手投票'
         return _reply(to_name, from_name, create_time, txt)
 
     bul = bul.strip()
@@ -109,7 +112,7 @@ def _handle_reply(request):
             txt = '你已被禁言，请联系管理员，询问情况后再试'
             return _reply(to_name, from_name, create_time, txt)
     except:
-        txt = 'oops，你的弹幕发送失败了...请稍等片刻再试哦'
+        txt = 'oops，你的弹幕发送失败了...请稍等片刻再试哦！回复\"教程\"获取发弹幕教程，或回复\"投票\"为喜欢的歌手投票'
         return _reply(to_name, from_name, create_time, txt)
 
 
