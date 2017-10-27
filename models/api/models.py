@@ -10,7 +10,7 @@ class Bullet(models.Model):
     # optional fields
     info = models.ForeignKey('Info', on_delete=models.SET_NULL,
         blank=True, null=True)
-    color = models.CharField(max_length=6, blank=True, default="000000")
+    color = models.CharField(max_length=6, blank=True, default="ffffff")
     font_size = models.PositiveSmallIntegerField(blank=True, default=12)
     display_mode = models.CharField(max_length=1, blank=True, choices=(
         ('f', 'fixed'),
