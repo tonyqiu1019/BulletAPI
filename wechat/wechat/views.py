@@ -79,10 +79,10 @@ def _handle_reply(request):
         txt = '发送弹幕请参考：http://mp.weixin.qq.com/s/pPOxYWzgmnXjWN6Dienf6Q'
         return _reply(to_name, from_name, create_time, txt)
     if content == '最佳组合':
-        txt = '最佳组合的投票链接暂未开放哦！'
+        txt = '请点击：http://mp.weixin.qq.com/s/F-MeJqpcpT9mIPb_4jCWLw 投出你心中的最佳组合'
         return _reply(to_name, from_name, create_time, txt)
     if content == '最佳歌手':
-        txt = '最佳歌手的投票链接暂未开放哦！'
+        txt = '请点击：http://mp.weixin.qq.com/s/ZyQlTKEjdVM79Z-G7vW4Ag 投出第二轮的两位最佳歌手'
         return _reply(to_name, from_name, create_time, txt)
 
     if len(content) <= 2 or content[:2] != '弹幕':
