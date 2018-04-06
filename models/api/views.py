@@ -38,7 +38,7 @@ def _valid_content(str):
 
 # get un-retrieved bullets
 def new_bullets(request):
-    if request.method == 'OPTION':
+    if request.method == 'OPTIONS':
         return _response_with_header({ 'ok': True })
 
     if request.method != 'GET':
@@ -64,7 +64,7 @@ def new_bullets(request):
 
 # update posted bullets
 def success_last_retrieve(request):
-    if request.method == 'OPTION':
+    if request.method == 'OPTIONS':
         return _response_with_header({ 'ok': True })
 
     if request.method != 'POST':
@@ -93,7 +93,7 @@ def success_last_retrieve(request):
 
 # create a new bullet
 def create_bullet(request):
-    if request.method == 'OPTION':
+    if request.method == 'OPTIONS':
         return _response_with_header({ 'ok': True })
 
     if request.method != 'POST':
