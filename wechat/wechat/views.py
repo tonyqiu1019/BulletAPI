@@ -16,7 +16,7 @@ FIRST_MSG = (
     '届时请输入\"投票\"关键字获取链接，你的投票将直接决定最终入围UVa好声音决赛的选手阵容！',
 )
 TUTORIAL = '发送弹幕请参考：http://mp.weixin.qq.com/s/pPOxYWzgmnXjWN6Dienf6Q'
-VOTE = （
+VOTE = (
     '请点击：https://mp.weixin.qq.com/s/RAaiVHujToxZfCrmB0E9fw ',
     '为自己最喜欢的三位选手投票',
 )
