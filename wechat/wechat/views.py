@@ -29,6 +29,7 @@ NON_EMPTY = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格�
 FORBIDDEN = '你已被禁言，请联系管理员，询问情况后再试。' + _FAIL
 SERVER_ERR = 'oops，你的弹幕发送失败了...请稍等片刻再试哦！' + _FAIL
 
+
 def _make_post_request(url, post_data):
     post_encoded = json.dumps(post_data).encode('utf-8')
     req = urllib.request.Request(url, data=post_encoded, method='POST')
