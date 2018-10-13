@@ -6,6 +6,29 @@ from lxml import etree
 import urllib.request
 import json
 
+BULLET_API_URL = 'https://danmu-183606.appspot.com/api/create/'
+
+FIRST_MSG = (
+    '欢迎关注UVA CSSS微信公众号！\n',
+    '今晚的好声音决赛中，我们将使用此公众号为观众\提供弹幕互动和投票功能，请按照\n',
+    '\"弹幕 想发送的内容\"\n',
+    '格式发送弹幕。今晚的比赛结束后，你将有机会为自己最喜欢的三位选手投票。',
+    '届时请输入\"投票\"关键字获取链接，你的投票将直接决定最终入围UVa好声音决赛的选手阵容！',
+)
+TUTORIAL = '发送弹幕请参考：http://mp.weixin.qq.com/s/pPOxYWzgmnXjWN6Dienf6Q'
+VOTE = （
+    '请点击：https://mp.weixin.qq.com/s/RAaiVHujToxZfCrmB0E9fw ',
+    '为自己最喜欢的三位选手投票',
+)
+
+SUCCESS = '弹幕发送成功！'
+_FAIL = '回复\"高级弹幕\"或\"教程\"获取发弹幕教程，或回复\"投票\"参与投票'
+NON_TEXT = '目前仅支持文本信息，请按\n\"弹幕 想发送的内容\"\n格式发弹幕。' + _FAIL
+BAD_FORMAT = '消息格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕。' + _FAIL
+NON_EMPTY = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格式发弹幕。' + _FAIL
+FORBIDDEN = '你已被禁言，请联系管理员，询问情况后再试。' + _FAIL
+SERVER_ERR = 'oops，你的弹幕发送失败了...请稍等片刻再试哦！' + _FAIL
+
 def _make_post_request(url, post_data):
     post_encoded = json.dumps(post_data).encode('utf-8')
     req = urllib.request.Request(url, data=post_encoded, method='POST')
@@ -56,21 +79,17 @@ def _handle_reply(request):
     except:
         return HttpResponse('')
 
-    inst = '回复\"高级弹幕\"或\"教程\"获取发弹幕教程，或回复\"投票\"参与投票'
-
     if msg_type == 'event':
         try:
             event = tree.xpath('/xml/Event')[0].text
             if event == 'subscribe':
-                txt = '欢迎关注UVA CSSS微信公众号！\n今晚的好声音决赛中，我们将使用此公众号为观众提供弹幕互动和投票功能，请按照\n\"弹幕 想发送的内容\"\n格式发送弹幕。今晚的比赛结束后，你将有机会为自己最喜欢的三位选手投票，届时请输入\"投票\"关键字获取链接。你的投票将直接决定最终入围UVa好声音决赛的选手阵容！'
-                return _reply(to_name, from_name, create_time, txt)
+                return _reply(to_name, from_name, create_time, FIRST_MSG)
             else:
                 return HttpResponse('')
         except:
             return HttpResponse('')
     elif msg_type != 'text':
-        txt = '目前仅支持文本信息，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，' + inst
-        return _reply(to_name, from_name, create_time, txt)
+        return _reply(to_name, from_name, create_time, NON_TEXT)
 
     try:
         content = tree.xpath('/xml/Content')[0].text
@@ -78,43 +97,30 @@ def _handle_reply(request):
         return HttpResponse('')
 
     if content == '高级弹幕' or content == '教程':
-        txt = '发送弹幕请参考：http://mp.weixin.qq.com/s/pPOxYWzgmnXjWN6Dienf6Q'
-        return _reply(to_name, from_name, create_time, txt)
+        return _reply(to_name, from_name, create_time, TUTORIAL)
     if content == '投票':
-        txt = '请点击：https://mp.weixin.qq.com/s/RAaiVHujToxZfCrmB0E9fw 为自己最喜欢的三位选手投票'
-        return _reply(to_name, from_name, create_time, txt)
+        return _reply(to_name, from_name, create_time, VOTE)
 
     if len(content) <= 2 or content[:2] != '弹幕':
-        txt = '你的消息格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，' + inst
-        return _reply(to_name, from_name, create_time, txt)
-
+        return _reply(to_name, from_name, create_time, BAD_FORMAT)
     bul = content[2:]
     if len(bul) == 0:
-        txt = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，' + inst
-        return _reply(to_name, from_name, create_time, txt)
+        return _reply(to_name, from_name, create_time, NON_EMPTY)
     if bul[0] != ' ':
-        txt = '你的消息格式似乎不对哦，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，' + inst
-        return _reply(to_name, from_name, create_time, txt)
-
+        return _reply(to_name, from_name, create_time, BAD_FORMAT)
     bul = bul.strip()
     if len(bul) == 0:
-        txt = '不能发送空弹幕，请按\n\"弹幕 想发送的内容\"\n格式发弹幕，' + inst
-        return _reply(to_name, from_name, create_time, txt)
+        return _reply(to_name, from_name, create_time, NON_EMPTY)
 
-    post_url = 'https://danmu-183606.appspot.com/api/create/'
     post_data = { 'content': bul, 'fingerprint': '#'+from_name }
-
     try:
-        resp = _make_post_request(post_url, post_data)
+        resp = _make_post_request(BULLET_API_URL, post_data)
         if resp['ok']:
-            txt = '弹幕发送成功！'
-            return _reply(to_name, from_name, create_time, txt)
+            return _reply(to_name, from_name, create_time, SUCCESS)
         else:
-            txt = '你已被禁言，请联系管理员，询问情况后再试。' + inst
-            return _reply(to_name, from_name, create_time, txt)
+            return _reply(to_name, from_name, create_time, FORBIDDEN)
     except:
-        txt = 'oops，你的弹幕发送失败了...请稍等片刻再试哦！' + inst
-        return _reply(to_name, from_name, create_time, txt)
+        return _reply(to_name, from_name, create_time, SERVER_ERR)
 
 
 def index_page(request):
