@@ -12,13 +12,14 @@ class Bullet(models.Model):
         blank=True, null=True)
     color = models.CharField(max_length=6, blank=True, default="ffffff")
     font_size = models.PositiveSmallIntegerField(blank=True, default=12)
+    num_repeat = models.PositiveSmallIntegerField(blank=True, default=1)
     display_mode = models.CharField(max_length=1, blank=True, choices=(
         ('f', 'fixed'),
         ('s', 'scroll'),
     ), default='s')
 
     def __unicode__(self):
-        ret = self.content[:10]+'...' if len(self.content) > 13 else self.content 
+        ret = self.content[:10]+'...' if len(self.content) > 13 else self.content
         return u'%s' % (ret,)
 
     class Meta:
