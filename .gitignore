@@ -13,3 +13,5 @@ migrations/
 models/lib/**
 models/env/**
 
+# gcloud related
+**.gcloudignore

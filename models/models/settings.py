@@ -41,17 +41,29 @@ INSTALLED_APPS = (
     # 'corsheaders',
 )
 
-MIDDLEWARE_CLASSES = (
+# MIDDLEWARE_CLASSES = (
+#     # 'corsheaders.middleware.CorsMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     # 'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     'django.middleware.security.SecurityMiddleware',
+# )
+
+MIDDLEWARE = [
     # 'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    # 'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-)
+]
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -87,13 +99,13 @@ WSGI_APPLICATION = 'models.wsgi.application'
 # }
 
 # Google Cloud Deployment
-if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
+if os.getenv('GAE_APPLICATION', None):
     # Running on production App Engine, so connect to Google Cloud SQL using
     # the unix socket at /cloudsql/<your-cloudsql-connection string>
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/danmu-183606:us-east1:danmu1',
+            'HOST': '/cloudsql/ssserver-190705:us-east1:danmu1',
             'NAME': 'bullet',
             'USER': 'django',
             'PASSWORD': 'tongqiu',
