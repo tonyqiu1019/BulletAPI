@@ -54,8 +54,14 @@ def new_bullets(request):
     resp = { 'ok': True, 'bullets': [] }
     for obj in objs:
         obj.ret_time = time_now; obj.save()
-        cur = { 'content': obj.content, 'color': obj.color, 'id': obj.id,
-            'display_mode': obj.display_mode,'font_size': obj.font_size }
+        cur = {
+            'content': obj.content,
+            'color': obj.color,
+            'id': obj.id,
+            'display_mode': obj.display_mode,
+            'font_size': obj.font_size,
+            'num_repeat': obj.num_repeat,
+        }
         resp['bullets'].append(cur)
         if len(resp['bullets']) >= 20: break
 
