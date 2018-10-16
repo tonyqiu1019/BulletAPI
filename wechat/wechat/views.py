@@ -6,7 +6,8 @@ from lxml import etree
 import urllib.request
 import json
 
-BULLET_API_URL = 'https://danmu-183606.appspot.com/api/create/'
+# BULLET_API_URL = 'https://danmu-183606.appspot.com/api/create/'
+BULLET_API_URL = 'https://ssserver-190705.appspot.com/api/create/'
 
 FIRST_MSG = (
     '欢迎关注UVA CSSS微信公众号！\n',
