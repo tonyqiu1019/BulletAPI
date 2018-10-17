@@ -25,10 +25,9 @@ def _response_with_header(data):
 
 def _is_hex(str):
     if len(str) != 6: return False
-    allowed = ['0','1','2','3','4','5','6','7','8','9',
-        'a','b','c','d','e','f']
+    hexs = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
     for i in range(6):
-        if str[i].lower() not in allowed: return False
+        if str[i].lower() not in hexs: return False
     return True
 
 
@@ -130,6 +129,11 @@ def create_bullet(request):
     if 'font_size' in post_dict:
         if isinstance(post_dict['font_size'], int):
             bul.font_size = post_dict['font_size']
+        else:
+            return HttpResponseBadRequest('bad key \'font_size\'')
+    if 'num_repeat' in post_dict:
+        if isinstance(post_dict['num_repeat'], int):
+            bul.num_repeat = post_dict['num_repeat']
         else:
             return HttpResponseBadRequest('bad key \'font_size\'')
 
