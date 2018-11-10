@@ -17,10 +17,7 @@ FIRST_MSG = (
     '届时请输入\"投票\"关键字获取链接，你的投票将直接决定最终入围UVa好声音决赛的选手阵容！',
 )
 TUTORIAL = '发送弹幕请参考：http://mp.weixin.qq.com/s/pPOxYWzgmnXjWN6Dienf6Q'
-VOTE = (
-    '请点击：https://mp.weixin.qq.com/s/ii0m8OJfnUfZJigApWZ29g',
-    '为自己最喜欢的组合投票',
-)
+VOTE = '第一轮投票链接：https://mp.weixin.qq.com/s/ii0m8OJfnUfZJigApWZ29g'
 
 SUCCESS = '弹幕发送成功！'
 _FAIL = '回复\"高级弹幕\"或\"教程\"获取发弹幕教程，或回复\"投票\"参与投票'
