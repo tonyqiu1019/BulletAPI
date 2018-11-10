@@ -10,11 +10,11 @@ import json
 BULLET_API_URL = 'https://ssserver-190705.appspot.com/api/create/'
 
 FIRST_MSG = (
-    '欢迎关注UVA CSSS微信公众号！\n',
-    '今晚的好声音决赛中，我们将使用此公众号为观众提供弹幕互动和投票功能，请按照\n',
-    '\"弹幕 想发送的内容\"\n',
-    '格式发送弹幕。今晚的比赛结束后，你将有机会为自己最喜欢的三位选手投票。',
-    '届时请输入\"投票\"关键字获取链接，你的投票将直接决定最终入围UVa好声音决赛的选手阵容！',
+    '欢迎关注UVA CSSS微信公众号！\n'
+    '今晚的好声音决赛中，我们将使用此公众号为观众提供弹幕互动和投票功能，请按照\n'
+    '\"弹幕 想发送的内容\"\n'
+    '格式发送弹幕。今晚的比赛结束后，你将有机会为自己最喜欢的三位选手投票。'
+    '届时请输入\"投票\"关键字获取链接，你的投票将直接决定最终入围UVa好声音决赛的选手阵容！'
 )
 TUTORIAL = '发送弹幕请参考：http://mp.weixin.qq.com/s/pPOxYWzgmnXjWN6Dienf6Q'
 VOTE = '第一轮投票链接：https://mp.weixin.qq.com/s/ii0m8OJfnUfZJigApWZ29g'
