@@ -18,7 +18,7 @@ FIRST_MSG = (
 )
 TUTORIAL = '发送弹幕请参考：http://mp.weixin.qq.com/s/pPOxYWzgmnXjWN6Dienf6Q'
 VOTE = (
-    '请点击：http://mp.weixin.qq.com/s?__biz=MzA5MTg5MDI2Mg==&mid=542807876&idx=1&sn=e1e7ad23db236c41c21700f72d6fcf4d&chksm=35db407d02acc96bb7d80871304540b94a06a71f6edeb87d63b2f2e4145c988a8df857a4c946#rd ',
+    '请点击：https://mp.weixin.qq.com/s/ii0m8OJfnUfZJigApWZ29g',
     '为自己最喜欢的组合投票',
 )
 
