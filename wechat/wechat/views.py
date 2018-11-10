@@ -11,15 +11,15 @@ BULLET_API_URL = 'https://ssserver-190705.appspot.com/api/create/'
 
 FIRST_MSG = (
     '欢迎关注UVA CSSS微信公众号！\n',
-    '今晚的好声音决赛中，我们将使用此公众号为观众\提供弹幕互动和投票功能，请按照\n',
+    '今晚的好声音决赛中，我们将使用此公众号为观众提供弹幕互动和投票功能，请按照\n',
     '\"弹幕 想发送的内容\"\n',
     '格式发送弹幕。今晚的比赛结束后，你将有机会为自己最喜欢的三位选手投票。',
     '届时请输入\"投票\"关键字获取链接，你的投票将直接决定最终入围UVa好声音决赛的选手阵容！',
 )
 TUTORIAL = '发送弹幕请参考：http://mp.weixin.qq.com/s/pPOxYWzgmnXjWN6Dienf6Q'
 VOTE = (
-    '请点击：https://mp.weixin.qq.com/s/RAaiVHujToxZfCrmB0E9fw ',
-    '为自己最喜欢的三位选手投票',
+    '请点击：http://mp.weixin.qq.com/s?__biz=MzA5MTg5MDI2Mg==&mid=542807876&idx=1&sn=e1e7ad23db236c41c21700f72d6fcf4d&chksm=35db407d02acc96bb7d80871304540b94a06a71f6edeb87d63b2f2e4145c988a8df857a4c946#rd ',
+    '为自己最喜欢的组合投票',
 )
 
 SUCCESS = '弹幕发送成功！'
