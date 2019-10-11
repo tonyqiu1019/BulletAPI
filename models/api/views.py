@@ -17,8 +17,20 @@ class JsonResponse(HttpResponse):
 def _response_with_header(data):
     ret = JsonResponse(data)
     ret['Access-Control-Allow-Origin'] = '*'
+    ret['Access-Control-Allow-Credentials'] = 'true'
     ret['Access-Control-Allow-Methods'] = 'POST, GET, OPTION'
-    ret['Access-Control-Allow-Headers'] = 'Content-Type, Accept, Origin'
+    ret['Access-Control-Allow-Headers'] = ', '.join(
+        [
+            'Access-Control-Allow-Headers',
+            'Access-Control-Allow-Origin',
+            'Origin',
+            'Accept',
+            'X-Requested-With',
+            'Content-Type',
+            'Access-Control-Request-Method',
+            'Access-Control-Request-Headers',
+        ]
+    )
     ret['Access-Control-Max-Age'] = '86400'
     return ret
 
